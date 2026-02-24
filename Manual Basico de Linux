@@ -1,0 +1,309 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{titlesec} 
+\usepackage{tocloft} % Paquete para arreglar el error visual del índice
+
+% Arregla el solapamiento de números romanos en el índice
+\advance\cftsecnumwidth 0.5em
+
+% Configuración de colores para el código
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegray},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\small,
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2,
+    literate={|波}{{|}}1 
+}
+
+\lstset{style=mystyle}
+
+% Personalización de Secciones con Números Romanos
+\titleformat{\section}{\normalfont\Large\bfseries}{Sección \thesection:}{1em}{}[\titlerule]
+\renewcommand{\thesection}{\Roman{section}}
+
+\title{Manual Maestro de Linux: Guía Completa de Terminal y Scripting}
+\author{Adrian Mamani Mamani}
+\date{Febrero 2026}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+\vspace{1cm}
+\begin{center}
+    \rule{\linewidth}{0.5mm}
+\end{center}
+\newpage
+
+% --- SECCIÓN I ---
+\section{Linux comandos básicos}
+
+\subsection{ls - Listar archivos}
+Muestra el contenido del directorio actual. Es el comando más utilizado para verificar qué archivos existen.
+\begin{itemize}
+    \item \textbf{Ejemplo 1:} \lstinline|ls -l| (Muestra una lista detallada con permisos, dueños, tamaño y fecha de modificación).
+    \item \textbf{Ejemplo 2:} \lstinline|ls -a| (Muestra todos los archivos, incluyendo aquellos que están ocultos y empiezan con un punto).
+\end{itemize}
+
+\subsection{cd - Cambiar de directorio}
+Permite navegar a través de la jerarquía de carpetas del sistema de archivos de Linux.
+\begin{itemize}
+    \item \textbf{Ejemplo 1:} \lstinline|cd Documentos| (Entra directamente a la carpeta llamada Documentos).
+    \item \textbf{Ejemplo 2:} \lstinline|cd ..| (Retrocede un nivel en la jerarquía, regresando a la carpeta superior).
+\end{itemize}
+
+\subsection{pwd - Directorio actual}
+Muestra la ruta absoluta desde la raíz (\texttt{/}) hasta la posición donde te encuentras actualmente.
+\begin{itemize}
+    \item \textbf{Ejemplo 1:} \lstinline|pwd| (Muestra la ruta estándar del usuario, ej. \texttt{/home/usuario}).
+    \item \textbf{Ejemplo 2:} \lstinline|pwd -P| (Muestra la ruta física real, resolviendo cualquier enlace simbólico).
+\end{itemize}
+
+\subsection{mkdir - Crear carpetas}
+Crea directorios nuevos en la ubicación indicada.
+\begin{itemize}
+    \item \textbf{Ejemplo 1:} \lstinline|mkdir proyectos| (Crea una sola carpeta llamada proyectos).
+    \item \textbf{Ejemplo 2:} \lstinline|mkdir -p alfa/beta/gamma| (Crea toda la ruta de carpetas anidadas de una sola vez).
+\end{itemize}
+
+\subsection{touch - Crear archivos vacíos}
+Crea un archivo nuevo sin contenido o actualiza la fecha de modificación de uno existente.
+\begin{itemize}
+    \item \textbf{Ejemplo 1:} \lstinline|touch notas.txt| (Crea un archivo de texto vacío).
+    \item \textbf{Ejemplo 2:} \lstinline|touch index.html script.js| (Crea múltiples archivos de diferentes extensiones simultáneamente).
+\end{itemize}
+
+\subsection{cp - Copiar archivos y carpetas}
+Duplica información de un origen a un destino.
+\begin{itemize}
+    \item \textbf{Ejemplo 1:} \lstinline|cp archivo.txt copia.txt| (Realiza una copia simple de un archivo).
+    \item \textbf{Ejemplo 2:} \lstinline|cp -r carpeta_original carpeta_nueva| (Copia una carpeta completa con todo su contenido de forma recursiva).
+\end{itemize}
+
+\subsection{rm - Eliminar}
+Borra datos del sistema. \textbf{Nota crítica:} En Linux, esta acción es generalmente irreversible desde la terminal.
+\begin{itemize}
+    \item \textbf{Ejemplo 1:} \lstinline|rm basura.txt| (Elimina un archivo específico).
+    \item \textbf{Ejemplo 2:} \lstinline|rm -rf carpeta_vieja| (Borra una carpeta y todo lo que contiene de forma forzada).
+\end{itemize}
+
+\subsection{cat - Visualizar contenido}
+Muestra el texto contenido en un archivo directamente en la terminal.
+\begin{itemize}
+    \item \textbf{Ejemplo 1:} \lstinline|cat lista.txt| (Lee el contenido completo del archivo).
+    \item \textbf{Ejemplo 2:} \lstinline|cat f1.txt f2.txt > union.txt| (Concatena dos archivos y guarda el resultado en uno nuevo).
+\end{itemize}
+
+% --- SECCIÓN II ---
+\section{Linux comandos avanzados}
+
+\subsection{chmod - Gestión de permisos}
+Controla quién puede leer (\textbf{r}), escribir (\textbf{w}) o ejecutar (\textbf{x}) un archivo.
+\begin{itemize}
+    \item \textbf{Ejemplo 1:} \lstinline|chmod +x script.sh| (Otorga permisos de ejecución al archivo).
+    \item \textbf{Ejemplo 2:} \lstinline|chmod 644 imagen.png| (Establece permisos de lectura/escritura para el dueño y solo lectura para los demás).
+\end{itemize}
+
+\subsection{chown - Cambio de propiedad}
+Define qué usuario y qué grupo son dueños de un recurso. Requiere privilegios de administrador.
+\begin{itemize}
+    \item \textbf{Ejemplo 1:} \lstinline|sudo chown usuario archivo.txt| (Cambia el dueño a un usuario específico).
+    \item \textbf{Ejemplo 2:} \lstinline|sudo chown -R www-data:www-data /var/www| (Cambia dueño y grupo a toda una estructura web).
+\end{itemize}
+
+\subsection{sudo - Ejecución con privilegios}
+Permite ejecutar comandos con el poder del superusuario (root).
+\begin{itemize}
+    \item \textbf{Ejemplo 1:} \lstinline|sudo apt update| (Actualiza los índices de los repositorios del sistema).
+    \item \textbf{Ejemplo 2:} \lstinline|sudo su| (Abre una sesión de terminal directamente como usuario root).
+\end{itemize}
+
+\subsection{Monitoreo de Sistema (top/htop y ps)}
+Herramientas para supervisar el rendimiento y los procesos activos.
+\begin{itemize}
+    \item \textbf{Ejemplo 1:} \lstinline|top| (Muestra los procesos en tiempo real ordenados por consumo de CPU).
+    \item \textbf{Ejemplo 2:} \lstinline|ps aux | grep "chrome"| (Busca todos los procesos relacionados con el navegador Chrome).
+\end{itemize}
+
+\subsection{kill - Terminación de procesos}
+Detiene la ejecución de programas mediante su ID de proceso (PID).
+\begin{itemize}
+    \item \textbf{Ejemplo 1:} \lstinline|kill 1234| (Envía una señal de término suave).
+    \item \textbf{Ejemplo 2:} \lstinline|kill -9 5678| (Fuerza el cierre inmediato y radical del proceso).
+\end{itemize}
+
+\subsection{tar - Compresión y empaquetado}
+Maneja archivos comprimidos, fundamental para respaldos.
+\begin{itemize}
+    \item \textbf{Ejemplo 1:} \lstinline|tar -cvf respaldo.tar /documentos| (Crea un paquete sin comprimir).
+    \item \textbf{Ejemplo 2:} \lstinline|tar -xzvf datos.tar.gz| (Extrae el contenido de un archivo comprimido con gzip).
+\end{itemize}
+
+% --- SECCIÓN III ---
+\section{Programación Shell (Bash Scripting)}
+
+\subsection{Estructura de un script (Shebang)}
+El Shebang indica al kernel qué binario debe interpretar el archivo de texto.
+\begin{itemize}
+    \item \textbf{Línea obligatoria:} \lstinline|#!/bin/bash|
+    \item \textbf{Ejemplo 1 (Hola Mundo completo):}
+    \begin{lstlisting}[language=bash]
+#!/bin/bash
+# Este es un comentario descriptivo
+echo "Iniciando el sistema de automatizacion..."
+echo "Usuario actual: $USER"
+    \end{lstlisting}
+    \item \textbf{Ejemplo 2 (Ejecución):} Para correr un script se requiere:
+    \lstinline|chmod +x mi_script.sh && ./mi_script.sh|
+\end{itemize}
+
+\subsection{Uso de variables y paso de argumentos}
+Las variables dinámicas permiten que los scripts sean reutilizables.
+\begin{itemize}
+    \item \textbf{Ejemplo 1 (Variables de entorno y locales):}
+    \begin{lstlisting}[language=bash]
+HORA=$(date +%H:%M)
+echo "La hora de ejecucion es: $HORA"
+    \end{lstlisting}
+    \item \textbf{Ejemplo 2 (Argumentos de línea de comandos):}
+    Captura datos externos con \texttt{\$1}, \texttt{\$2}, etc.
+    \begin{lstlisting}[language=bash]
+echo "Procesando el archivo de origen: $1"
+echo "Enviando a la carpeta de destino: $2"
+    \end{lstlisting}
+\end{itemize}
+
+\subsection{Estructuras de control: if-else, for, while}
+Permiten la toma de decisiones y ciclos repetitivos.
+\begin{itemize}
+    \item \textbf{Ejemplo 1 (Condicional de existencia):}
+    \begin{lstlisting}[language=bash]
+if [ -f "archivo.txt" ]; then
+    echo "El archivo existe."
+else
+    echo "Archivo no encontrado."
+fi
+    \end{lstlisting}
+    \item \textbf{Ejemplo 2 (Bucle For para renombrado):}
+    \begin{lstlisting}[language=bash]
+for file in *.txt; do
+    mv "$file" "old_$file"
+done
+    \end{lstlisting}
+\end{itemize}
+
+\subsection{Scripts Funcionales Completos}
+Creación de scripts para tareas como backups o instaladores.
+\begin{itemize}
+    \item \textbf{Ejemplo 1 (Backup Automatizado con Fecha):}
+    \begin{lstlisting}[language=bash]
+#!/bin/bash
+DESTINO="/home/usuario/backups"
+FECHA=$(date +%Y%m%d_%H%M)
+tar -czf $DESTINO/respaldo_$FECHA.tar.gz /home/usuario/datos
+echo "Respaldo creado con exito."
+    \end{lstlisting}
+    \item \textbf{Ejemplo 2 (Instalador Automático):}
+    \begin{lstlisting}[language=bash]
+#!/bin/bash
+echo "Instalando dependencias de desarrollo..."
+sudo apt update && sudo apt install -y git build-essential curl
+echo "Instalacion finalizada."
+    \end{lstlisting}
+\end{itemize}
+
+% --- SECCIÓN IV ---
+\section{Guía de Diagnóstico: Errores Comunes}
+
+\subsection{Error 1: Permission Denied}
+Este error indica que el usuario actual no tiene los bits de permisos necesarios.
+\begin{itemize}
+    \item \textbf{Causa:} Intentar ejecutar un archivo sin permisos o escribir en zonas protegidas.
+    \item \textbf{Solución:} \lstinline|chmod +x archivo| o anteponer \lstinline|sudo|.
+\end{itemize}
+
+\subsection{Error 2: Command Not Found}
+El shell no localiza el comando en las rutas definidas.
+\begin{itemize}
+    \item \textbf{Solución:} Instalar con \texttt{apt} o verificar la ortografía del comando.
+\end{itemize}
+
+\subsection{Error 3: No space left on device}
+El almacenamiento físico ha llegado a su límite.
+\begin{itemize}
+    \item \textbf{Solución:} Ejecutar \lstinline|df -h| y limpiar archivos innecesarios.
+\end{itemize}
+
+\subsection{Error 4: Directory not empty}
+El comando de borrado falla si hay archivos dentro.
+\begin{itemize}
+    \item \textbf{Solución:} Usar el parámetro recursivo: \lstinline|rm -rf nombre_directorio|.
+\end{itemize}
+
+\subsection{Error 5: Could not get lock /var/lib/dpkg/lock}
+Conflicto entre procesos de gestión de paquetes.
+\begin{itemize}
+    \item \textbf{Solución:} Esperar a que termine la actualización automática o cerrar procesos de apt.
+\end{itemize}
+
+% --- SECCIÓN V ---
+\section{Tuberías y Redireccionamientos}
+En Linux "todo es un flujo de datos".
+
+\subsection{Conceptos de stdin, stdout y stderr}
+Linux trata las entradas y salidas como flujos direccionables.
+\begin{itemize}
+    \item \textbf{Standard Input (stdin):} Entrada de datos.
+    \item \textbf{Standard Output (stdout):} Salida exitosa.
+    \item \textbf{Standard Error (stderr):} Salida de errores.
+\end{itemize}
+
+\subsection{Operadores de Redirección y Pipes}
+Documentación del uso de operadores clave.
+\begin{itemize}
+    \item \lstinline/|/ (pipe): Conecta comandos.
+    \item \lstinline|>| (sobrescribir) y \lstinline|>>| (añadir).
+    \item \lstinline|2>| (redirigir errores).
+\end{itemize}
+
+\subsection{Ejemplos Prácticos de Flujo}
+Ejemplos obligatorios para demostrar comprensión.
+\begin{enumerate}
+    \item \textbf{Filtro Combinado:} \lstinline|ls /bin | grep "sh"|
+    \item \textbf{Conteo y Ordenamiento:} \lstinline|cat usuarios.txt | sort | wc -l|
+    \item \textbf{Registro de Errores:} \lstinline|ls /directorio/inexistente 2> errores.log|
+\end{enumerate}
+
+% --- SECCIÓN VI: Control de Uso de IA ---
+\section{Control de Generación y Uso de IA}
+
+\begin{table}[h!]
+    \centering
+    \renewcommand{\arraystretch}{1.5}
+    \begin{tabular}{|p{2cm}|p{9cm}|p{3cm}|}
+        \hline
+        \textbf{Uso de IA} & \textbf{Prompt; Texto enviado a la IA} & \textbf{Parte formada por IA} \\ \hline
+        Gemini & Genera un manual con comandos básicos de linux explicando 2 ejemplos de cada uno en formato latex -En base al codigo que me mandaste crea otra seccion con avanzados de linux explicando 2 ejemplos de cada uno en formato latex -En base al codigo que me mandaste crea otra seccion con programacion sheel explicandolo en formato latex -En base al codigo que me enviaste crea otra seccion que explique errores comunes, como identificarlos y solucionarlos -En base al codigo que me enviaste crea otra seccion de Tuberías y Redireccionamiento -Junta todos los codigos que me enviaste para copiarlos y pegarlos & 100\% IA \\ \hline
+    \end{tabular}
+    \caption{Registro de interacción con modelos de lenguaje.}
+\end{table}
+
+\end{document}
